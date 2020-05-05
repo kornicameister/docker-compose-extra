@@ -1,8 +1,8 @@
 PREFIX ?= /usr/local
 BINPREFIX ?= $(PREFIX)/bin
 
-COMMANDS_BINS = $(wildcard commands/docker-compose-*)
-COMMANDS = $(subst bin/, , $(COMMANDS_BINS))
+BINS = $(wildcard bin/docker-compose-*)
+COMMANDS = $(subst bin/, , $(BINS))
 
 CODE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
@@ -14,7 +14,9 @@ check:
 	@echo
 
 install: check
+	@echo "... installing bins to $(DESTDIR)$(BINPREFIX)"
 	@mkdir -p $(DESTDIR)$(BINPREFIX)
+
 	@$(foreach COMMAND, $(COMMANDS), \
 		echo "... installing $(COMMAND)"; \
 		cp -f $(COMMAND) $(DESTDIR)$(BINPREFIX)/$(COMMAND); \
