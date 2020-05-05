@@ -1,3 +1,6 @@
+# most credits goes https://github.com/tj/git-extras/blob/master/Makefile
+# that was used in initial version of this file.
+
 PREFIX ?= /usr/local
 BINPREFIX ?= $(PREFIX)/bin
 
