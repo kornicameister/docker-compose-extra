@@ -19,7 +19,7 @@ install: check
 
 	@$(foreach COMMAND, $(COMMANDS), \
 		echo "... installing $(COMMAND)"; \
-		cp -f $(COMMAND) $(DESTDIR)$(BINPREFIX)/$(COMMAND); \
+		cp -f bin/$(COMMAND) $(DESTDIR)$(BINPREFIX)/$(COMMAND); \
 	)
 
 test:
