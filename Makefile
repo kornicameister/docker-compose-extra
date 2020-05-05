@@ -22,8 +22,4 @@ install: check
 		cp -f bin/$(COMMAND) $(DESTDIR)$(BINPREFIX)/$(COMMAND); \
 	)
 
-test:
-	command -v docker-compose-ip 2>&1 && @echo "docker-compose-ip available"
-
-
 .PHONY: install
