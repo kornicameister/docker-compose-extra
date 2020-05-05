@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+dc="/usr/local/bin/docker-compose"
+
+dce_ip::usage() {
+    cat <<HERE
+usage: docker-compose ip                 # lists IPs for all services
+   or: docker-compose ip <service>       # show aliases matching pattern
+   or: docker-compose ip --help          # shows this message
+HERE
+}
+
+dce_ip::show_all() {
+    local services
+    services=$($dc ps --services)
+    for srv in $services; do
+        show_single "${srv}"
+    done
+}
+
+dce_ip::show_single() {
+    local service_name service_ip container_id
+
+    service_name="${1}"
+    container_id="$($dc ps -q "${service_name}")"
+    service_ip=$(docker inspect "${container_id}" | jq -r '.[0] | .NetworkSettings.Networks | .[] | .IPAddress')
+    echo "${service_name}: ${service_ip}"
+
+    unset service_name service_ip container_id
+}
+
+case $# in
+0) show_all ;;
+1)
+    case $1 in
+    "--help")
+        dce_ip::usage
+        ;;
+    *)
+        test -n "${1}" || dce_ip::show_all && dce_ip::show_single "${1}"
+        ;;
+    esac
+    ;;
+esac

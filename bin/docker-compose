@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+dc="/usr/local/bin/docker-compose"
+
+case "${1-""}" in
+"ip")
+    shift && docker-compose-ip "${@}"
+    ;;
+"--help")
+    $dc --help
+    echo "
+Custom commands:
+$(tput cuf 2)ip$(tput cuf 17)Shows private IP of service
+        "
+    ;;
+*)
+    $dc "${@}"
+    ;;
+esac
