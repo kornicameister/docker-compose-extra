@@ -8,11 +8,27 @@ name: Install
     branches: [master]
 
 jobs:
-  install:
+  via_script:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-16.04, ubuntu-18.04]
+        shell: [bash, zsh]
+        tool: [curl]
+    steps:
+      - run: |
+          sudo apt-get update -y -qq
+          sudo apt-get install -qq -y git ${{ matrix.tool }} ${{ matrix.shell }}
+      - run: |
+          ${{ matrix.tool }} -sSL \
+            https://raw.githubusercontent.com/kornicameister/docker-compose-extra/${{ github.head_ref }}/install.sh \
+            | CLONE_BRANCH=${{ github.head_ref }} CLONE_DEPTH=1 sudo ${{ matrix.shell }} /dev/stdin
+        if: github.event_name == 'pull_request'
+      - run: |
+          ${{ matrix.tool }}  -sSL https://git.io/JfZEY | sudo ${{ matrix.shell }} /dev/stdin
+        if: github.event_name == 'push'
+  via_checkout:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: |
