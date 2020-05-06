@@ -25,7 +25,8 @@ jobs:
             | CLONE_BRANCH=${{ github.head_ref }} CLONE_DEPTH=1 sudo ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'pull_request'
       - run: |
-          ${{ matrix.tool }}  -sSL https://git.io/JfZEY | sudo ${{ matrix.shell }} /dev/stdin
+          ${{ matrix.tool }}  -sSL https://git.io/JfZgU \
+          | sudo ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'push'
   via_checkout:
     runs-on: ubuntu-latest
