@@ -10,7 +10,7 @@ command -v docker >/dev/null 2>&1 && (
       sudo make -i "${1}" install
     fi
   }
-  dec::clone() {
+  dce::clone() {
     git clone "${CLONE_URL-"https://github.com/kornicameister/docker-compose-extra.git"}" \
       --depth "${CLONE_DEPTH-10}" \
       "${1}" \
@@ -22,7 +22,7 @@ command -v docker >/dev/null 2>&1 && (
 
   cd "${dir}" &&
     echo "Setting up 'docker-compose-extra'" &&
-    dce:clone "${PWD}/dce" &&
+    dce::clone "${PWD}/dce" &&
     dce::install "${PWD}/dce" &&
     cd "${pwd}" || exit 2
 
