@@ -8,7 +8,19 @@ name: Install
     branches: [master]
 
 jobs:
-  install:
+  install_neat:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04]
+        shell: [bash, zsh]
+    steps:
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -qq -y curl ${{ matrix.shell }}
+      - run: |
+          curl -sSL https://git.io/JfZEY | sudo ${{ matrix.shell }} /dev/stdin
+  install_make:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
