@@ -4,14 +4,20 @@
 
 command -v docker >/dev/null 2>&1 && (
   dce::install() {
+    cd "${1}" || (
+      echo "Failed to enter ${1}"
+      exit 1
+    )
     if [ -n "${PREFIX}" ]; then
-      PREFIX="${PREFIX}" make -i "${1}" install
+      PREFIX="${PREFIX}" make install
     else
-      sudo make -i "${1}" install
+      sudo make install
     fi
+    cd ..
   }
   dce::clone() {
     git clone "${CLONE_URL-"https://github.com/kornicameister/docker-compose-extra.git"}" \
+      --branch "${CLONE_BRANCH-master}" \
       --depth "${CLONE_DEPTH-10}" \
       "${1}" \
       &>/dev/null

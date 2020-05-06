@@ -22,7 +22,7 @@ jobs:
       - run: |
           ${{ matrix.tool }} -sSL \
             https://raw.githubusercontent.com/kornicameister/docker-compose-extra/${{ github.head_ref }}/install.sh \
-            | sudo ${{ matrix.shell }} /dev/stdin
+            | CLONE_BRANCH=${{ github.head_ref }} CLONE_DEPTH=1 sudo ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'pull_request'
       - run: |
           ${{ matrix.tool }}  -sSL https://git.io/JfZEY | sudo ${{ matrix.shell }} /dev/stdin
