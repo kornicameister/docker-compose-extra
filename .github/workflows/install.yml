@@ -21,7 +21,7 @@ jobs:
           sudo apt-get install -qq -y ${{ matrix.tool }} ${{ matrix.shell }}
       - run: |
           ${{ matrix.tool }} -sSL \
-            https://raw.githubusercontent.com/kornicameister/docker-compose-extra/${{ github.ref }}/install.sh \
+            https://raw.githubusercontent.com/kornicameister/docker-compose-extra/${{ github.head_ref }}/install.sh \
             | sudo ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'pull_request'
       - run: |
