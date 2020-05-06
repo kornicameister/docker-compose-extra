@@ -8,7 +8,7 @@ name: Install
     branches: [master]
 
 jobs:
-  install_neat:
+  via_script:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -27,7 +27,7 @@ jobs:
       - run: |
           ${{ matrix.tool }}  -sSL https://git.io/JfZEY | sudo ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'push'
-  install_make:
+  via_checkout:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
