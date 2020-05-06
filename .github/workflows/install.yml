@@ -14,23 +14,21 @@ jobs:
       matrix:
         os: [ubuntu-16.04, ubuntu-18.04]
         shell: [bash, zsh, ksh]
+        tool: [curl]
     steps:
       - run: |
-          sudo apt-get update -qq
-          sudo apt-get install -qq -y curl ${{ matrix.shell }}
+          sudo apt-get update -y -qq
+          sudo apt-get install -qq -y ${{ matrix.tool }} ${{ matrix.shell }}
       - run: |
-          curl -sSL \
+          ${{ matrix.tool }} -sSL \
             https://raw.githubusercontent.com/kornicameister/docker-compose-extra/${{ github.ref }}/install.sh \
             | sudo ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'pull_request'
       - run: |
-          curl -sSL https://git.io/JfZEY | sudo ${{ matrix.shell }} /dev/stdin
+          ${{ matrix.tool }}  -sSL https://git.io/JfZEY | sudo ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'push'
   install_make:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-16.04, ubuntu-18.04]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: |
