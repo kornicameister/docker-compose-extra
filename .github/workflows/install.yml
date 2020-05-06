@@ -18,7 +18,7 @@ jobs:
     steps:
       - run: |
           sudo apt-get update -y -qq
-          sudo apt-get install -qq -y ${{ matrix.tool }} ${{ matrix.shell }}
+          sudo apt-get install -qq -y git ${{ matrix.tool }} ${{ matrix.shell }}
       - run: |
           ${{ matrix.tool }} -sSL \
             https://raw.githubusercontent.com/kornicameister/docker-compose-extra/${{ github.head_ref }}/install.sh \
