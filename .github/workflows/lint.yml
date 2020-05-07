@@ -15,4 +15,4 @@ jobs:
           path: docker-compose
       - uses: azohra/shell-linter@v0.3.0
         with:
-          path: commands/
+          path: "commands/*"
